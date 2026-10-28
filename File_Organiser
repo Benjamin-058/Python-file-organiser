@@ -1,0 +1,42 @@
+import os
+import shutil
+
+folder=input(r"Enter Path of the Folder : ")
+
+file_ext={
+    '.mp3':'Musics',
+    '.mp4':'Videos',
+    '.png':'Images',
+    '.jpg':'Images',
+    '.jpeg':'Images',
+    '.img':'Images',
+    '.txt':'Docs',
+    '.docx':'Docs',
+    '.pdf':'Docs',
+    '.py':'Py_files'
+    }
+cnt=0
+if not os.path.isdir(folder) :
+	print("Folder not found please check the path") 
+else:
+    for file in os.listdir(folder):
+        path=os.path.join(folder,file)
+        if os.path.isfile(path):
+            ext=os.path.splitext(file)
+            ext=ext[1].lower()
+            if ext in file_ext:
+                tar=os.path.join(folder,file_ext[ext])
+                os.makedirs(tar,exist_ok=True)
+                shutil.move(path,os.path.join(tar,file))
+                print("Moved : {} -> {}".format(file,file_ext[ext]))
+                cnt+=1
+            else:
+                tar=os.path.join(folder,"Others")
+                os.makedirs(tar,exist_ok=True)
+                shutil.move(path,os.path.join(tar,file))
+                print("Moved : {} -> {}".format(file,"Others"))
+                cnt+=1
+    print("Total no of Files Moved :",cnt)
+
+
+print("Program Terminated...")
